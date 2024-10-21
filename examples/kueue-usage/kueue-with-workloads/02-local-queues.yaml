@@ -1,0 +1,35 @@
+---
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: LocalQueue
+metadata:
+  name: emergency-queue
+  namespace: ml-models
+spec:
+  description: "Queue for the emergency training jobs (Climate Change, Alzheimer, Cancer)."
+  cohort: shared-cohort
+  clusterQueue: emergency-cluster-queue
+
+---
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: LocalQueue
+metadata:
+  name: llm-model-queue
+  namespace: ml-models
+spec:
+  description: "Queue for the LLM model's training jobs."
+  cohort: shared-cohort
+  clusterQueue: llm-cluster-queue
+
+
+---
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: LocalQueue
+metadata:
+  name: gai-model-queue
+  namespace: ml-models
+spec:
+  description: "Queue for the GAI model's training jobs."
+  cohort: shared-cohort
+  clusterQueue: gai-cluster-queue
+
+

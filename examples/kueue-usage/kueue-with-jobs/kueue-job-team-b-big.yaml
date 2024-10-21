@@ -1,0 +1,25 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: big-b-
+  labels:
+    kueue.x-k8s.io/queue-name: local-queue-b
+spec:
+  parallelism: 4
+  completions: 3
+  suspend: true
+  template:
+    spec:
+      containers:
+      - name: dummy-job
+        image: gcr.io/k8s-staging-perf-tests/sleep:v0.1.0
+        args: ["300s"]
+        resources:
+          requests:
+            cpu: 4
+            memory: "16Gi"
+      restartPolicy: Never
+
+
+

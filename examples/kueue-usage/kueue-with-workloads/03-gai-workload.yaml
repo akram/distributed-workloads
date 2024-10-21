@@ -1,0 +1,26 @@
+---
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: Workload
+metadata:
+  name: train-gai
+spec:
+  active: true
+  queueName: gai-model-queue
+  priorityClassName: long-term-research
+  priority: 0
+  podSets:
+  - count: 3
+    name: gai-training
+    template:
+      spec:
+        containers:
+        - image: gcr.io/k8s-staging-perf-tests/sleep:latest
+          imagePullPolicy: Always
+          name: gai-training
+          args: ["3000s"]
+          resources:
+            requests:
+              cpu: "1"
+              memory: 1000Mi
+        restartPolicy: Never
+

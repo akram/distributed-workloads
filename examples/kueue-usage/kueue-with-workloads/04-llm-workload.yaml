@@ -1,0 +1,26 @@
+---
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: Workload
+metadata:
+  name: train-llm
+spec:
+  active: true
+  queueName: llm-model-queue
+  priorityClassName: business-impacting
+  priority: 0
+  podSets:
+  - count: 3
+    name: llm-training
+    template:
+      spec:
+        containers:
+        - image: gcr.io/k8s-staging-perf-tests/sleep:latest
+          imagePullPolicy: Always
+          name: llm-training
+          args: ["300s"]
+          resources:
+            requests:
+              cpu: "1"
+              memory: 1000Mi
+        restartPolicy: Never
+

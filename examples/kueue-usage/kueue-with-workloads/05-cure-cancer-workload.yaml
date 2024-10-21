@@ -1,0 +1,32 @@
+---
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: Workload
+metadata:
+  name: cure-cancer
+spec:
+  active: true
+  queueName: emergency-queue
+  priorityClassName: human-critical
+  priority: 0
+  podSets:
+  - count: 3
+    name: cancer-treatment-model-update
+    template:
+      spec:
+        containers:
+        - image: gcr.io/k8s-staging-perf-tests/sleep:latest
+          imagePullPolicy: Always
+          name: cancer-treatment-model-update
+          args: ["300s"]
+          resources:
+            requests:
+              cpu: "1"
+              memory: 1000Mi
+        restartPolicy: Never
+
+
+
+
+
+
+
